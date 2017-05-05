@@ -1,52 +1,28 @@
 import { takeEvery, delay } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
-
-import { addFlashMessage } from "actions/flashMessages";
+import { fetchApi, exceptionExtractError } from 'utils/api-fetch'
 import * as signupActions from "actions/signup";
-import * as userActions from "actions/user";
 
 function* signup_process(action) {
     try {
         yield delay(1000); // simulate long db query
-        // Llamada a la api
         const payload = yield call(
-            postSignupToAPI,
+            postSignupUser,
             action.signupData
         );
 
-        // Hay errores
-        if(payload.data.errors){
-            yield put(signupActions.signupFailed(payload.data.errors));
+        if(payload.user){
+          yield put({ type: signupActions.SIGNUP_SUCCESS, user: payload.user, message: 'Signup Success' });
+        } else {
+          yield put({ type: signupActions.SIGNUP_FAILED, message: 'Signup Failed' });
         }
-
-        // Pasamos los datos del usuario
-        if(payload.data.user){
-            yield put(userActions.userLogin(payload.data.user));
-            // REDIRECT??
-        }
-
     } catch (e) {
-        yield put(
-            addFlashMessage({
-                "type": "error",
-                "text": "Network Error!"
-            })
-        );
+      console.log(e);
     }
 }
 
-const postSignupToAPI = data => {
-
-    let bodydata = JSON.stringify({
-        email: data.email,
-        password: data.password
-    });
-    // let instance = axios.create({
-    //     headers: { "Content-Type": "application/json" }
-    // });
-    //
-    // return instance.post("/api/signup", bodydata);
-
+const postSignupUser = data => {
+  return fetchApi("/users", data, 'post');
 };
 
 export function* watchSignupRequest() {

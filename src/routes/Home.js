@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
@@ -12,7 +13,6 @@ import MenuItem from 'material-ui/MenuItem';
 import Layout from './Layout';
 
 import { fetchUsers } from "actions/user";
-
 
 const iconButtonElement = (
   <IconButton
@@ -41,10 +41,9 @@ class IndexPage extends Component {
 	render() {
 		return (
 			<Layout title="Home">
-				<div id="page-index" className="page" style={{marginTop:10}}>
+				<div id="page-index" className="page" style={{paddingTop:60}}>
 					<List>
-		        <Subheader>Today</Subheader>
-						{ this.props.users.map( (item, index) => ([
+						{ this.props.users && this.props.users.map( (item, index) => ([
 			        <ListItem
 								key={item.id}
 			          leftAvatar={<Avatar>{item.firstName.charAt(0).toUpperCase()}</Avatar>}

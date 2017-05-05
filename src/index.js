@@ -11,7 +11,7 @@ const rootEl = document.getElementById('app');
 
 function render() {
 	ReactDOM.render(
-		<AppContainer>	
+		<AppContainer>
 			<App />
 		</AppContainer>,
 		rootEl

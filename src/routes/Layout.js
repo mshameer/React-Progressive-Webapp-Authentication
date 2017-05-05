@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from "react-redux";
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import ThemeDefault from '../theme-default';
@@ -7,9 +8,18 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import Header from 'components/Header';
 import LeftDrawer from 'components/LeftDrawer';
+import Logout from 'material-ui/svg-icons/action/power-settings-new';
+import GridOn from 'material-ui/svg-icons/image/grid-on';
+import PersonAdd from 'material-ui/svg-icons/social/person-add';
 import withWidth, {LARGE, SMALL} from 'material-ui/utils/withWidth';
 import { userLogout } from "actions/user";
 import Data from './data';
+
+const menus = [
+  { text: 'DashBoard', icon: <GridOn/>, link: '/dashboard' },
+  { text: 'Register', icon: <PersonAdd/>, link: '/register' },
+  { text: 'Logout', icon: <Logout/>, link: '/logout' },
+];
 
 class Layout extends Component {
 	constructor(props) {
@@ -55,7 +65,7 @@ class Layout extends Component {
             handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer.bind(this)}
 						handleLogout={this.props.logout}/>
 					<LeftDrawer navDrawerOpen={navDrawerOpen}
-            menus={Data.menus}
+            menus={menus}
             username="User Admin"/>
 					{this.props.children}
 				</div>

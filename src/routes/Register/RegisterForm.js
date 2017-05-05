@@ -3,32 +3,25 @@ import PT from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Snackbar from 'material-ui/Snackbar';
-import {Link} from 'react-router';
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
 
     static propTypes = {
-        processing: PT.bool, // send request?
         errors: PT.object,
         email: PT.string,
         password: PT.string,
-        pause: PT.bool,
-        login: PT.func,
+        firstName: PT.string,
+        register: PT.func,
         onChangeHandle: PT.func
     }
 
     static defaultProps = {
-        processing: false,
         errors: {},
-        email: "",
-        password: "",
-        pause: true,
-        login: () => {},
+        email: '',
+        password: '',
+        firstName: '',
+        register: () => {},
         onChangeHandle: () => {}
-    }
-
-    constructor(props) {
-        super(props);
     }
 
     onChangeHandle(e, value) {
@@ -37,18 +30,28 @@ class LoginForm extends Component {
 
     submit(e) {
         e.preventDefault();
-        this.props.login({ email: this.props.email, password: this.props.password });
+        const { email, password, firstName } = this.props;
+        this.props.register({ email, password, firstName });
     }
 
     render() {
 
-        const { processing, errors, email, password, pause } = this.props;
-        const error_message = errors.email || errors.password || errors.message || false;
+        const { errors, email, password, firstName } = this.props;
+        const error_message = errors.firstName || errors.email || errors.password ||
+          errors.message || false;
 
         return (
             <form>
-                <h2>Login</h2>
+                <h2>Register</h2>
                 <hr />
+                  <TextField
+                    name="firstName"
+                    hintText="First Name"
+                    floatingLabelText="First Name"
+                    fullWidth={true}
+                    value={firstName}
+                    onChange={::this.onChangeHandle}
+                  />
                   <TextField
                     name="email"
                     hintText="E-mail"
@@ -67,14 +70,12 @@ class LoginForm extends Component {
                     onChange={::this.onChangeHandle}
                   />
                   <div>
-                    <Link to="/">
-                      <RaisedButton
-                        primary={true}
-                        style={styles.loginBtn}
-                        onTouchTap={::this.submit}>
-                          Login
-                        </RaisedButton>
-                    </Link>
+                    <RaisedButton
+                      primary={true}
+                      style={styles.loginBtn}
+                      onTouchTap={::this.submit}>
+                        Register
+                    </RaisedButton>
                   </div>
                   <Snackbar
                      open={!!error_message}
@@ -86,7 +87,7 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+export default RegisterForm;
 
 const styles = {
   loginBtn: {

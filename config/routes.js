@@ -58,7 +58,7 @@ var routes = {
  	controller: 'UsersAuthController',
  	action: 'revoke',
  },
- 
+
  'get /users': 'UsersController.getAll',
 
 };
@@ -66,8 +66,8 @@ var routes = {
 // the same app will be rendered at all these routes
 var indexRoutes = ['/',
 		'/dashboard',
-	'/page1',
-	'/page2'];
+	'/register',
+];
 indexRoutes.forEach(function (r) {
 	routes['GET ' + r] = 'IndexController.index';
 });

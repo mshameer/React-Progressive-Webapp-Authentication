@@ -34,10 +34,6 @@ export const fetchApi = (endPoint, payload = {}, reMethod = 'get', headers = {})
 		options.body = JSON.stringify(payload);
 	}
 	return fetch(`${apiConfig.url}${url}`, options).then( response => {
-		if (response.status >= 400) {
-			throw new Error("Bad response from server");
-		}
-
 		if (response.status === 204) {
 			return response.text();
 		}

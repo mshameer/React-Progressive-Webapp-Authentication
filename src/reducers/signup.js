@@ -1,14 +1,14 @@
 import {
     SIGNUP_REQUEST,
     SIGNUP_FAILED,
+    SIGNUP_SUCCESS,
     SIGNUP_INPUT_CHANGE
 } from "actions/signup";
 
 const initialState = {
-    isFetching: false,
     email: "",
+    firstName: "",
     password: "",
-    pause: false,
     errors: {}
 };
 
@@ -21,27 +21,36 @@ export default (state=initialState, action={}) => {
         case SIGNUP_FAILED:
             return {
                 ...state,
-                isFetching: false,
-                errors: action.errors,
-                pause: true
+                errors: {  ...state.errors, message: action.message },
+            };
+        case SIGNUP_SUCCESS:
+            return {
+                ...state,
+                user: action.user,
+                errors: {  ...state.errors, message: action.message },
             };
 
         case SIGNUP_INPUT_CHANGE:
             let { change } = action;
+            if (change.hasOwnProperty("firstName")) {
+                return {
+                  ...state,
+                  firstName: change.firstName ,
+                  errors: { ...state.errors, firstName: "", message: "" },
+                };
+            }
             if (change.hasOwnProperty("email")) {
                 return {
-                    ...state,
-                    email: change.email,
-                    errors: { ...state.errors, email: "" },
-                    pause: false
+                  ...state,
+                  email: change.email,
+                  errors: { ...state.errors, email: "", message: "" },
                 };
             }
             if (change.hasOwnProperty("password")) {
                 return {
-                    ...state,
-                    password: change.password ,
-                    errors: { ...state.errors, password: "" },
-                    pause: false
+                  ...state,
+                  password: change.password ,
+                  errors: { ...state.errors, password: "", message: "" },
                 };
             }
 

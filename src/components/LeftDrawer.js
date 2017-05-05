@@ -1,4 +1,5 @@
-import React,  { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Drawer from 'material-ui/Drawer';
 import {spacing, typography} from 'material-ui/styles';
 import {white, blue600} from 'material-ui/styles/colors';
@@ -51,10 +52,10 @@ const LeftDrawer = (props) => {
       docked={true}
       open={navDrawerOpen}>
         <div style={styles.logo}>
-          Material Admin
+          Progressive Manu
         </div>
         <div style={styles.avatar.div}>
-          <Avatar src="http://www.material-ui.com/images/uxceo-128.jpg"
+          <Avatar src="http://www.material-ui.com/images/kerem-128.jpg"
                   size={50}
                   style={styles.avatar.icon}/>
           <span style={styles.avatar.span}>{props.username}</span>
